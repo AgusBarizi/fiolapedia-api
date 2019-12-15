@@ -78,7 +78,7 @@ router.get('/transaction/open', auth, async ({ user }, res) => {
       res.sendStatus(sc.NOT_FOUND)
     }
   } catch (error) {
-    res.sendStatus(sc.INTERNAL_SERVER_ERROR).send({ error })
+    res.status(sc.INTERNAL_SERVER_ERROR).send({ error })
   }
 })
 
@@ -86,27 +86,28 @@ router.get('/transaction/open', auth, async ({ user }, res) => {
 router.post('/transaction/open', auth, async (req, res) => {
   try {
     const { user_id } = req.body
-    const newTrans = await new Transaction({ user_id })
+    const newTrans = await new Transaction({ user_id, total:0})
     await newTrans.save()
     res.send(newTrans.id)
+    // res.send({'test':user_id})
   } catch (error) {
-    res.sendStatus(sc.INTERNAL_SERVER_ERROR).send({ error })
+    res.status(sc.INTERNAL_SERVER_ERROR).send({ error })
   }
 })
 
 //ver2 insert 1 item aja,
 router.post('/transactionsInsert', auth, async (req, res) => {
   try {
-    const { trans_id, book_id, qty, price, subtotal } = req.body
+    const { trans_id, book_id, qty, price, subtotal, title } = req.body
 
     const a = await Transaction.findOne({ _id: trans_id })
     a.total = Number(a.total) + Number(subtotal)
-    a.items.push({ book_id, qty, price, subtotal })
+    a.items.push({ book_id, qty, price, subtotal, title })
     await a.save()
 
     res.send(sc.OK)
   } catch (error) {
-    res.sendStatus(sc.INTERNAL_SERVER_ERROR).send({ error })
+    res.status(sc.INTERNAL_SERVER_ERROR).send({ error })
   }
 })
 

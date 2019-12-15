@@ -17,6 +17,9 @@ const TransactionSchema = new Schema(
           ref: 'Book',
           required: true,
         },
+        title: {
+          type: String,
+        },
         qty: {
           type: Number,
           required: true,
@@ -56,8 +59,9 @@ TransactionSchema.methods.insertItems = async function({
   qty,
   price,
   subtotal,
+  title,
 }) {
-  this.items.push({ book_id, qty, price, subtotal })
+  this.items.push({ book_id, qty, price, subtotal,title })
   await this.save()
   return this.item_id
 }

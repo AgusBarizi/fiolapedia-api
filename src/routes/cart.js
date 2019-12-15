@@ -27,5 +27,4 @@ function debugHandler(error, result) {
 //   }
 // })
 
-
 module.exports = router

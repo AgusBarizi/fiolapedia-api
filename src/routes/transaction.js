@@ -86,7 +86,7 @@ router.get('/transaction/open', auth, async ({ user }, res) => {
 router.post('/transaction/open', auth, async (req, res) => {
   try {
     const { user_id } = req.body
-    const newTrans = await new Transaction({ user_id, total:0})
+    const newTrans = await new Transaction({ user_id, total: 0 })
     await newTrans.save()
     res.send(newTrans.id)
     // res.send({'test':user_id})

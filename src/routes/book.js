@@ -16,14 +16,14 @@ router.get('/categories', async (_req, res) => {
 
 router.get('/books', async (_req, res) => {
   try {
-    var keyword = _req.query.keyword;
+    var keyword = _req.query.keyword
     let books = {}
-    if(keyword){
-      books = await Book.find({'title':{ $regex: keyword, $options: 'i' }})
-    }else{
+    if (keyword) {
+      books = await Book.find({ title: { $regex: keyword, $options: 'i' } })
+    } else {
       books = await Book.find({})
     }
-    
+
     res.send({ books })
   } catch (error) {
     res.status(sc.INTERNAL_SERVER_ERROR).send({ error })
@@ -93,7 +93,8 @@ const upload = multer({
   },
 })
 
-router.post('/booksImage/:id',
+router.post(
+  '/booksImage/:id',
   auth,
   upload.single('image'),
   async (req, res) => {

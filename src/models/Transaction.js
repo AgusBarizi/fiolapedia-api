@@ -61,7 +61,7 @@ TransactionSchema.methods.insertItems = async function({
   subtotal,
   title,
 }) {
-  this.items.push({ book_id, qty, price, subtotal,title })
+  this.items.push({ book_id, qty, price, subtotal, title })
   await this.save()
   return this.item_id
 }

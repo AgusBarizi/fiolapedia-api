@@ -96,9 +96,11 @@ const upload = multer({
 router.post(
   '/booksImage/:id',
   auth,
-  upload.single('image'),
+  upload.single('imagee'),
   async (req, res) => {
-    const book = await Book.findByIdAndUpdate(req.params.id, req.file.buffer)
+    //const book = await Book.findByIdAndUpdate(req.params.id, req.file.buffer)
+    const book = await Book.findById(req.params.id)
+    book.imagee=req.file.buffer
     await book.save()
     res.send({ message: 'berhasil di upload' })
   },
